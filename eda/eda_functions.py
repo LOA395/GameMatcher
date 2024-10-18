@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import numpy as np
+import plotly.express as px
 
 
 # Función para exploración de los datos
@@ -12,7 +14,7 @@ def df_exploration(df):
     print (f"\nValores unicos: \n{df.nunique()}") # Revisar valores unicos
     return df
 
-# 1. Expandir las columnas de mecánicas y categorías a formato binario
+# Expandir las columnas de mecánicas y categorías a formato binario
 def expandir_columnas_binarias(df, columna):
     """
     Expande una columna de listas en varias columnas binarias, manteniendo la ID del juego.
@@ -22,9 +24,13 @@ def expandir_columnas_binarias(df, columna):
         df[columna].str.strip('[]').str.replace("'", "").str.split(', ').explode().str.get_dummies().groupby(level=0).sum()
     )
     
+    # Asegurar que los valores sean binarios (0 o 1), sin afectar la columna 'BGGId'
+    df_expanded.loc[:, df_expanded.columns != 'BGGId'] = df_expanded.loc[:, df_expanded.columns != 'BGGId'].clip(upper=1)
+    
     return df_expanded
 
-# 1. Análisis univariable de variables numéricas
+
+# Análisis univariable de variables numéricas
 def analizar_variable_numerica(df, columna):
     plt.figure(figsize=(10,6))
     
@@ -45,7 +51,7 @@ def analizar_variable_numerica(df, columna):
     descripcion = df[columna].describe()
     print(f'Descripción estadística de {columna}:\n{descripcion}\n')
 
-# 2. Análisis univariable de variables categóricas
+# Análisis univariable de variables categóricas
 def analizar_variable_categorica(df, columna):
     plt.figure(figsize=(10,6))
     
@@ -60,7 +66,7 @@ def analizar_variable_categorica(df, columna):
     frecuencia = df[columna].value_counts()
     print(f'Frecuencia de {columna}:\n{frecuencia}\n')
 
-# 3. Análisis univariable de variables textuales
+# Análisis univariable de variables textuales
 def analizar_variable_textual(df, columna):
     # Longitud de los textos
     df[f'{columna}_longitud'] = df[columna].str.len()
@@ -116,11 +122,8 @@ def analizar_categorias_populares(df_categorias):
 
 # Correlación entre Valoraciones y Otras Variables
 def analizar_correlaciones(df):
-    df['Number_of_Ratings'] = pd.to_numeric(df['Number_of_Ratings'], errors='coerce')
-    df['Average_Rating'] = pd.to_numeric(df['Average_Rating'], errors='coerce')
-
     # Calcular la correlación entre valoraciones y otras variables
-    correlation_matrix = df[['Average_Rating', 'Min_Players', 'Max_Players', 'Min_Playtime', 'Max_Playtime', 'Number_of_Ratings']].corr()
+    correlation_matrix = df[['Bayesian_Average_Rating', 'Average_Rating', 'Min_Players', 'Max_Players', 'Min_Playtime', 'Max_Playtime', 'Number_of_Ratings']].corr()
 
     # Mostrar un heatmap de la correlación
     plt.figure(figsize=(10,6))
@@ -167,21 +170,46 @@ def analizar_mejor_valoradas(df_juegos, df_binario, tipo):
     # Mostrar los resultados en texto
     print(f'Top 10 {tipo.capitalize()} Mejor Valoradas:\n{valoracion_series.head(10)}\n')
 
-# Correlación entre categorías
-def correlacion_entre_categorias(df_categorias):
-    correlation_matrix = df_categorias.drop(columns=['BGGId']).corr()
-    
-    plt.figure(figsize=(12,10))
-    sns.heatmap(correlation_matrix, annot=False, cmap='coolwarm', vmin=-1, vmax=1)
-    plt.title('Correlación entre Categorías')
-    plt.show()
+# Correlación entre categorías o mecanicas
+def correlacion_entre_categorias_o_mecanicas(df):
+    correlation_matrix = df.drop(columns=['BGGId']).corr()
+    # Create a mask for the upper triangle
+    mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
 
-# Correlación entre mecánicas
-def correlacion_entre_mecanicas(df_mecanicas):
-    correlation_matrix = df_mecanicas.drop(columns=['BGGId']).corr()
-    
-    plt.figure(figsize=(12,10))
-    sns.heatmap(correlation_matrix, annot=False, cmap='coolwarm', vmin=-1, vmax=1)
-    plt.title('Correlación entre Mecánicas')
-    plt.show()
+    # Add the mask to the correlation matrix
+    correlation_matrix_masked = correlation_matrix.mask(mask)
+
+    # Create a heatmap using Plotly Express
+    fig = px.imshow(correlation_matrix_masked,
+                    x=correlation_matrix.columns,
+                    y=correlation_matrix.columns,
+                    color_continuous_scale='RdBu_r',
+                    zmin=-1,
+                    zmax=1,
+                    aspect="auto",
+                    title='Correlation Heatmap of Numerical Variables (Half)')
+
+    # Defining the dimensions of the plot
+    fig.update_layout(
+        xaxis_title="",
+        yaxis_title="",
+        width=1000,
+        height=800
+    )
+
+    # Add the correlation values as annotations 
+    for i in range(len(correlation_matrix)):
+        for j in range(i):  # Only add the lower triangle
+            value = correlation_matrix.values[i, j]
+            fig.add_annotation(
+                x=correlation_matrix.columns[j],
+                y=correlation_matrix.columns[i],
+                text=f"{value:.2f}",
+                showarrow=False,
+                font=dict(size=8)
+            )
+
+    # Show the plot
+    fig.show()
+
 
