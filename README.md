@@ -67,8 +67,8 @@ Para ejecutar la aplicación en tu entorno local:
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tuusuario/BoardGameMatcher.git
-   cd BoardGameMatcher
+   git clone https://github.com/LOA395/GameMatcher.git
+   cd GameMatcher
 2. Instalar las dependencias:
     ```bash
     pip install -r requirements.txt
