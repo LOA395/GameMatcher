@@ -76,3 +76,10 @@ Para ejecutar la aplicación en tu entorno local:
    ```bash
    streamlit run app.py
 6. Acceder a la aplicación en tu navegador en: http://localhost:8501
+
+## Resources
+
+- [Presentación]()
+
+## Autores:
+  - `Laura Ortiz Alameda` - [Linkedin](https://www.linkedin.com/in/laura-ortiz-alameda/)
