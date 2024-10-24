@@ -7,6 +7,15 @@ import plotly.express as px
 
 # Función para exploración de los datos
 def df_exploration(df):
+    """
+    Explora el DataFrame con información básica.
+    
+    Parámetros:
+    - df: DataFrame a analizar.
+    
+    Salida:
+    - Muestra tipos de datos, valores duplicados, valores nulos y únicos.
+    """
     # Revisión básica de los datos
     print(df.info())  # Para revisar los tipos de datos
     print(f"\nValores duplicados: {df.duplicated().sum()}")  # Revisa si hay duplicados en los datasets
@@ -18,6 +27,13 @@ def df_exploration(df):
 def expandir_columnas_binarias(df, columna):
     """
     Expande una columna de listas en varias columnas binarias, manteniendo la ID del juego.
+    
+    Parámetros:
+    - df: DataFrame con los datos.
+    - columna: Nombre de la columna a expandir.
+    
+    Salida:
+    - DataFrame con la columna expandida a formato binario (0 o 1).
     """
     # Mantener la columna 'BGGId' y expandir la columna binaria
     df_expanded = df[['BGGId']].join(
@@ -32,6 +48,16 @@ def expandir_columnas_binarias(df, columna):
 
 # Análisis univariable de variables numéricas
 def analizar_variable_numerica(df, columna):
+    """
+    Realiza un análisis de una variable numérica mediante gráficos y estadísticas descriptivas.
+    
+    Parámetros:
+    - df: DataFrame a analizar.
+    - columna: Nombre de la columna numérica.
+    
+    Salida:
+    - Histograma, boxplot y descripción estadística de la columna.
+    """
     plt.figure(figsize=(10,6))
     
     # Histograma
@@ -53,6 +79,16 @@ def analizar_variable_numerica(df, columna):
 
 # Análisis univariable de variables categóricas
 def analizar_variable_categorica(df, columna):
+    """
+    Realiza un análisis de una variable categórica mediante gráficos de barras.
+    
+    Parámetros:
+    - df: DataFrame a analizar.
+    - columna: Nombre de la columna categórica.
+    
+    Salida:
+    - Gráfico de barras con frecuencias y la distribución de las categorías.
+    """
     plt.figure(figsize=(10,6))
     
     # Gráfico de barras con conteo de la columna categórica
@@ -68,6 +104,16 @@ def analizar_variable_categorica(df, columna):
 
 # Análisis univariable de variables textuales
 def analizar_variable_textual(df, columna):
+    """
+    Analiza la longitud de los textos de una columna y genera gráficos de la distribución.
+    
+    Parámetros:
+    - df: DataFrame a analizar.
+    - columna: Nombre de la columna de texto.
+    
+    Salida:
+    - Histograma de la longitud y estadísticas descriptivas de los textos.
+    """
     # Longitud de los textos
     df[f'{columna}_longitud'] = df[columna].str.len()
     
@@ -85,6 +131,15 @@ def analizar_variable_textual(df, columna):
 
 # Distribución de Juegos por Año de Publicación
 def analizar_juegos_por_año(df):
+    """
+    Grafica la distribución de los juegos según su año de publicación.
+    
+    Parámetros:
+    - df: DataFrame con los juegos y su año de publicación.
+    
+    Salida:
+    - Gráfico de líneas con la cantidad de juegos publicados por año.
+    """
     df['Year_Published'] = pd.to_numeric(df['Year_Published'], errors='coerce')
 
     # Contar la cantidad de juegos por año
@@ -100,6 +155,15 @@ def analizar_juegos_por_año(df):
 
 # Análisis de Mecánicas Populares
 def analizar_mecanicas_populares(df_mecanicas):
+    """
+    Muestra un gráfico de barras con las 10 mecánicas más populares en los juegos.
+    
+    Parámetros:
+    - df_mecanicas: DataFrame con las mecánicas en formato binario.
+    
+    Salida:
+    - Gráfico de barras con las mecánicas más populares.
+    """
     mecánicas_populares = df_mecanicas.drop('BGGId', axis=1).sum().sort_values(ascending=False).head(10)
     
     plt.figure(figsize=(12,6))
@@ -111,6 +175,15 @@ def analizar_mecanicas_populares(df_mecanicas):
 
 # Categorías Más Populares
 def analizar_categorias_populares(df_categorias):
+    """
+    Muestra un gráfico de barras con las 10 categorías más populares en los juegos.
+    
+    Parámetros:
+    - df_categorias: DataFrame con las categorías en formato binario.
+    
+    Salida:
+    - Gráfico de barras con las categorías más populares.
+    """
     categorias_populares = df_categorias.drop('BGGId', axis=1).sum().sort_values(ascending=False).head(10)
     
     plt.figure(figsize=(12,6))
@@ -122,6 +195,15 @@ def analizar_categorias_populares(df_categorias):
 
 # Correlación entre Valoraciones y Otras Variables
 def analizar_correlaciones(df):
+    """
+    Muestra la matriz de correlación entre varias variables numéricas.
+    
+    Parámetros:
+    - df: DataFrame con las variables numéricas a analizar.
+    
+    Salida:
+    - Heatmap de correlación entre las variables seleccionadas.
+    """
     # Calcular la correlación entre valoraciones y otras variables
     correlation_matrix = df[['Bayesian_Average_Rating', 'Average_Rating', 'Min_Players', 'Max_Players', 'Min_Playtime', 'Max_Playtime', 'Number_of_Ratings']].corr()
 
@@ -140,6 +222,9 @@ def analizar_mejor_valoradas(df_juegos, df_binario, tipo):
     - df_juegos: DataFrame con los juegos y sus valoraciones.
     - df_binario: DataFrame binario (de mecánicas o categorías).
     - tipo: String que indica si es 'mecánicas' o 'categorías'.
+    
+    Salida:
+    - Gráfico de barras y descripción de las 10 mejores mecánicas o categorías valoradas.
     """
     # Filtrar juegos con valoraciones mayores a 0
     df_juegos_filtrado = df_juegos[df_juegos['Average_Rating'] > 0]
@@ -170,46 +255,5 @@ def analizar_mejor_valoradas(df_juegos, df_binario, tipo):
     # Mostrar los resultados en texto
     print(f'Top 10 {tipo.capitalize()} Mejor Valoradas:\n{valoracion_series.head(10)}\n')
 
-# Correlación entre categorías o mecanicas
-def correlacion_entre_categorias_o_mecanicas(df):
-    correlation_matrix = df.drop(columns=['BGGId']).corr()
-    # Create a mask for the upper triangle
-    mask = np.triu(np.ones_like(correlation_matrix, dtype=bool))
-
-    # Add the mask to the correlation matrix
-    correlation_matrix_masked = correlation_matrix.mask(mask)
-
-    # Create a heatmap using Plotly Express
-    fig = px.imshow(correlation_matrix_masked,
-                    x=correlation_matrix.columns,
-                    y=correlation_matrix.columns,
-                    color_continuous_scale='RdBu_r',
-                    zmin=-1,
-                    zmax=1,
-                    aspect="auto",
-                    title='Correlation Heatmap of Numerical Variables (Half)')
-
-    # Defining the dimensions of the plot
-    fig.update_layout(
-        xaxis_title="",
-        yaxis_title="",
-        width=1000,
-        height=800
-    )
-
-    # Add the correlation values as annotations 
-    for i in range(len(correlation_matrix)):
-        for j in range(i):  # Only add the lower triangle
-            value = correlation_matrix.values[i, j]
-            fig.add_annotation(
-                x=correlation_matrix.columns[j],
-                y=correlation_matrix.columns[i],
-                text=f"{value:.2f}",
-                showarrow=False,
-                font=dict(size=8)
-            )
-
-    # Show the plot
-    fig.show()
 
 

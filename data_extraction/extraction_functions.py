@@ -6,6 +6,18 @@ import random
 
 # Función para obtener detalles generales del juego junto con mecánicas y categorías
 def obtener_detalles_completos(id_juego):
+    """
+    Esta función realiza una solicitud a la API de BoardGameGeek para obtener los detalles generales de un juego,
+    incluyendo sus mecánicas y categorías, usando su ID.
+
+    Parámetros:
+    - id_juego (int): ID del juego en la base de datos de BoardGameGeek.
+
+    Retorna:
+    - dict: Un diccionario con los detalles completos del juego (si existe), incluyendo nombre, año de publicación,
+            descripción, mecánicas, categorías, valoraciones, etc.
+    - None: Si no se obtienen detalles del juego o si el ID es inválido.
+    """
     url = f'https://www.boardgamegeek.com/xmlapi2/thing?id={id_juego}&stats=1'
     respuesta = requests.get(url)
     
@@ -82,6 +94,19 @@ def obtener_detalles_completos(id_juego):
 
 # Función para obtener 1000 juegos válidos generando IDs aleatorios continuamente
 def obtener_juegos_aleatorios(cantidad_deseada=1000, rango_min=1, rango_max=300000, pause_time=2):
+    """
+    Genera IDs aleatorios de juegos dentro de un rango dado y obtiene los detalles de esos juegos.
+    Continúa hasta obtener la cantidad deseada de juegos válidos.
+
+    Parámetros:
+    - cantidad_deseada (int): Número de juegos válidos a obtener.
+    - rango_min (int): Valor mínimo del ID para la generación aleatoria.
+    - rango_max (int): Valor máximo del ID para la generación aleatoria.
+    - pause_time (int): Pausa en segundos entre las solicitudes a la API para evitar sobrecarga.
+
+    Retorna:
+    - pd.DataFrame: Un DataFrame con los detalles de los juegos válidos obtenidos.
+    """
     datos_juegos = []
     ids_generados = set()  # Usar un conjunto para evitar IDs duplicados
     

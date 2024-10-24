@@ -1,0 +1,12 @@
+numpy
+pandas
+matplotlib
+seaborn
+plotly
+scikit-learn
+nltk
+gensim
+streamlit
+pinecone-client
+pinecone-sdk
+googletrans
