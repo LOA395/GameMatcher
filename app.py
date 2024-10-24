@@ -8,7 +8,7 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import re
-import yaml
+
 
 
 # Cargar el modelo y los datos
@@ -21,20 +21,10 @@ def cargar_modelo_y_datos():
     df_juegos = pd.read_csv('data/cleaned/data_for_recommender.csv')
     return model, df_juegos
 
-# Función para cargar la configuración desde config.yaml
-def cargar_configuracion():
-    with open("config.yaml", "r") as archivo_config:
-        config = yaml.safe_load(archivo_config)
-    return config
-
 # Inicializar Pinecone y conectar al índice
 def inicializar_pinecone():
-    # Cargar la configuración
-    config = cargar_configuracion()
 
-    # Obtener la API key
-    api_key = config['pinecone']['api_key']
-    pc = Pinecone(api_key=api_key)  
+    pc = Pinecone(api_key="e2659d52-b976-4624-b8b8-8de36f8ea15a")  
     # Nombre del índice
     index_name = "boardgames-recommendation"
     # Conectar al índice existente
