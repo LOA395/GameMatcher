@@ -18,6 +18,13 @@ nltk.download('punkt_tab')
 # Cargar el modelo y los datos
 @st.cache_resource
 def cargar_modelo_y_datos():
+    """
+    Carga el modelo Doc2Vec previamente entrenado y el DataFrame con descripciones de los juegos.
+  
+    Returns:
+        model (Doc2Vec): El modelo Doc2Vec cargado desde el archivo binario.
+        df_juegos (DataFrame): DataFrame con las descripciones de los juegos y datos relevantes.
+    """
     # Cargar el modelo Doc2Vec (asegúrate de guardar y cargar el modelo previamente entrenado)
     model = Doc2Vec.load("model/model_doc2vec.bin")
     
@@ -27,7 +34,15 @@ def cargar_modelo_y_datos():
 
 # Inicializar Pinecone y conectar al índice
 def inicializar_pinecone():
+    """
+    Inicializa la conexión con Pinecone y devuelve el índice donde se almacenan los embeddings.
 
+    Pinecone se conecta utilizando una API key. Luego se selecciona el índice donde se encuentran
+    los embeddings de los juegos de mesa.
+
+    Returns:
+        index (pinecone.Index): Objeto de índice de Pinecone conectado al índice existente.
+    """
     pc = Pinecone(api_key="e2659d52-b976-4624-b8b8-8de36f8ea15a")  
     # Nombre del índice
     index_name = "boardgames-recommendation"

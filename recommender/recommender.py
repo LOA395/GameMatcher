@@ -12,6 +12,13 @@ import yaml
 
 # Función para cargar la configuración desde config.yaml
 def cargar_configuracion():
+    '''
+    Esta función abre el archivo de configuración YAML ubicado en el directorio (..\config.yaml),
+    carga su contenido y lo convierte en un diccionario de Python.
+    
+    Retorna: 
+    - config (dict): Diccionario con las configuraciones cargadas desde el YAML.
+    '''
     with open("..\config.yaml", "r") as archivo_config:
         config = yaml.safe_load(archivo_config)
     return config
