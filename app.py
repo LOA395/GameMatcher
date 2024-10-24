@@ -4,12 +4,16 @@ from gensim.models.doc2vec import Doc2Vec
 from sklearn.preprocessing import normalize
 from pinecone import Pinecone, ServerlessSpec
 from googletrans import Translator 
+import nltk
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import re
 
-
+# Descargar stopwords si no están disponibles
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('punkt_tab')
 
 # Cargar el modelo y los datos
 @st.cache_resource
