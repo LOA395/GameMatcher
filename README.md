@@ -51,7 +51,7 @@ El proyecto incluye una interfaz intuitiva construida en **Streamlit**, donde el
 ### 5. Análisis de Datos
 Se llevó a cabo un análisis exploratorio de los datos, incluyendo visualizaciones en **Python** y **Power BI**, para entender mejor las características de los juegos.
 
-![Demo del Power BI](https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOXNydHR3dGRyYXByc3lnb3FuZ2RiNWQ3cXQxbGYxOTdmbmQ4dXlzdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/6eVVFDiT7ntZt2wVQJ/giphy.gif)
+![Demo del Power BI](https://drive.google.com/file/d/1HkgPeMKDLtYQJtZT-Wm7Twa2zSpWgYav/view?usp=sharing)
 
 
 ## Requisitos
