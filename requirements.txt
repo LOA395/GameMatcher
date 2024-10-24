@@ -9,3 +9,4 @@ gensim
 streamlit
 pinecone-client
 googletrans
+scipy
