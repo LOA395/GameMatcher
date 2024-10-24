@@ -11,3 +11,4 @@ pinecone-client==5.0.1
 scipy>=1.12.0 
 setuptools==67.6.1
 googletrans==4.0.0-rc1
+PyYAML==6.0
