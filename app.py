@@ -8,21 +8,33 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import re
+import yaml
 
 
 # Cargar el modelo y los datos
 @st.cache_resource
 def cargar_modelo_y_datos():
     # Cargar el modelo Doc2Vec (asegúrate de guardar y cargar el modelo previamente entrenado)
-    model = Doc2Vec.load("model\model_doc2vec.bin")
+    model = Doc2Vec.load("model/model_doc2vec.bin")
     
     # Cargar el DataFrame con las descripciones de los juegos
-    df_juegos = pd.read_csv('data\cleaned\data_for_recommender.csv')
+    df_juegos = pd.read_csv('data/cleaned/data_for_recommender.csv')
     return model, df_juegos
+
+# Función para cargar la configuración desde config.yaml
+def cargar_configuracion():
+    with open("config.yaml", "r") as archivo_config:
+        config = yaml.safe_load(archivo_config)
+    return config
 
 # Inicializar Pinecone y conectar al índice
 def inicializar_pinecone():
-    pc = Pinecone(api_key='e2659d52-b976-4624-b8b8-8de36f8ea15a')  # Coloca tu API key
+    # Cargar la configuración
+    config = cargar_configuracion()
+
+    # Obtener la API key
+    api_key = config['pinecone']['api_key']
+    pc = Pinecone(api_key=api_key)  
     # Nombre del índice
     index_name = "boardgames-recommendation"
     # Conectar al índice existente
