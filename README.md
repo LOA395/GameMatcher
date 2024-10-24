@@ -56,12 +56,18 @@ Se llevó a cabo un análisis exploratorio de los datos, incluyendo visualizacio
 
 ## Requisitos
 
-- **Python 3.x**
-- **Streamlit**
-- **Gensim (Doc2Vec)**
-- **Pinecone**
-- **Pandas**
-- **NLTK**
+- **Python 3.9**
+- **numpy**
+- **pandas**
+- **matplotlib**
+- **seaborn**
+- **plotly**
+- **scikit-learn**
+- **nltk**
+- **gensim**
+- **streamlit**
+- **pinecone-client**
+- **googletrans**
 
 ## Ejecución de la Aplicación
 
