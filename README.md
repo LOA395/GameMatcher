@@ -88,8 +88,8 @@ Para ejecutar la aplicación en tu entorno local:
 ## Resources
 
 - [Presentación]()
-- [Power BI]()
-- [Streamlit]()
+- [Power BI](https://drive.google.com/file/d/1KZK5Wnq67g3Et1P-4A0IImltThUeYFax/view?usp=sharing)
+- [Streamlit](https://boardgamematcher.streamlit.app/)
 
 ## Autores:
   - `Laura Ortiz Alameda` - [Linkedin](https://www.linkedin.com/in/laura-ortiz-alameda/)
