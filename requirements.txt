@@ -8,5 +8,4 @@ nltk
 gensim
 streamlit
 pinecone-client
-pinecone-sdk
 googletrans
