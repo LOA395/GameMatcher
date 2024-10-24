@@ -48,10 +48,12 @@ El proyecto incluye una interfaz intuitiva construida en **Streamlit**, donde el
 - Elegir si desea tener en cuenta las valoraciones de los juegos.
 - Obtener recomendaciones personalizadas basadas en la similaridad del coseno entre los juegos y las preferencias del usuario.
 
+![Demo app]()  
+
 ### 5. Análisis de Datos
 Se llevó a cabo un análisis exploratorio de los datos, incluyendo visualizaciones en **Python** y **Power BI**, para entender mejor las características de los juegos.
 
-![Demo del Power BI](https://s2.ezgif.com/tmp/ezgif-2-9987c947f5.gif)
+![Demo del Power BI]()
 
 
 ## Requisitos
@@ -87,7 +89,7 @@ Para ejecutar la aplicación en tu entorno local:
 
 ## Resources
 
-- [Presentación]()
+- [Presentación](https://docs.google.com/presentation/d/1ME3Gys-oGrQDjeEhR4T3jNY6xejT6mQH/edit?usp=sharing&ouid=118034828539754351878&rtpof=true&sd=true)
 - [Power BI](https://drive.google.com/file/d/1KZK5Wnq67g3Et1P-4A0IImltThUeYFax/view?usp=sharing)
 - [Streamlit](https://boardgamematcher.streamlit.app/)
 
