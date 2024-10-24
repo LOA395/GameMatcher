@@ -48,7 +48,7 @@ El proyecto incluye una interfaz intuitiva construida en **Streamlit**, donde el
 - Elegir si desea tener en cuenta las valoraciones de los juegos.
 - Obtener recomendaciones personalizadas basadas en la similaridad del coseno entre los juegos y las preferencias del usuario.
 
-![Demo app]()  
+![Demo app](https://github.com/LOA395/GameMatcher/blob/main/slides/streamlit-app-video.gif?raw=true)  
 
 ### 5. Análisis de Datos
 Se llevó a cabo un análisis exploratorio de los datos, incluyendo visualizaciones en **Python** y **Power BI**, para entender mejor las características de los juegos.
